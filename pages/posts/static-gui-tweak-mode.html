@@ -1,0 +1,25 @@
+<!-- pagetitle:Tweak mode: put the interface where your eyes already are -->
+<!-- pagelayout:page-html -->
+<!-- pagedate:09/03/2026 -->
+<!-- pageimage:pages/posts/images/tweakmode.webp -->
+<!-- pageexcerpt:The Static GUI is a full custom widget suite with one visual language across every panel. Ctrl+F11 makes all of it draggable, and where you put things persists between sessions. Ten minutes on your first evening, worth real games. -->
+<!-- pagekeywords:static gui,interface,tweak mode,widgets,keybinds,hotbind,engineering -->
+<!-- pageauthor: Scary le Poo -->
+<!-- pagetype:article -->
+<!-- pagecategory: engineering -->
+
+<p class="lead">The default layout is a compromise designed for everyone, and you are not everyone.</p>
+
+<h2>The Static GUI</h2>
+<p>SplinterFaction's interface is a custom widget suite &mdash; minimap, resources display, supply readout, research points, orders menu, build menu, selected units, tooltip, players list, plus the overlays: healthbars with shield strength, range rings, resource drain labels, the economy graph, the survival panel, the chat log. All panels share a consistent visual language, and any of them can be toggled through the widget selector.</p>
+
+<h2>Tweak mode</h2>
+<p>Enter it with Ctrl+F11 and the panels become draggable. Leave it and everything stays where you put it, including between sessions. Move what you check constantly to where your eyes already are: if you watch your army on the left of the screen, a resources display in the far top-right is a full eye movement every time you check it. Move what you never use out of the way, or turn it off. Account for your monitor &mdash; ultrawides spread critical readouts uncomfortably far apart, small screens crowd them.</p>
+<p>A layout that suits you reduces the number of things you have to consciously remember to look at. Given how much of the manual is "check your supply, check your income, check your factory", that's worth real games.</p>
+
+<h2>Hotbinding and the keybinds editor</h2>
+<p>Hover any button in the orders or build menu and press Ctrl+Insert. The game asks for a key, and that button is bound to it immediately; Ctrl+Delete removes it. It's the quickest way to put your most-built structures on keys without opening a menu.</p>
+<p>For everything else there's the Static Keybinds editor: two tabs (SF Keys, grouped by section, and All Bindings for everything the engine knows about), left-click a row to capture, right-click to unbind. Conflicts are handled, not hidden &mdash; a dialog lists exactly what a key is already bound to before anything changes. Your changes go to a separate <code>sf_uikeys.txt</code>, loaded last, so your personal <code>uikeys.txt</code> from other Recoil-family games is never touched.</p>
+
+<h2>Under the hood</h2>
+<p>The suite runs on a GL4 rendering pipeline with deferred rendering and several GPU-driven effects &mdash; instanced healthbars among them. If performance is poor, the troubleshooting order is: lower graphics settings, disable weather and time-of-day, turn off non-essential widgets, reduce shadow quality, and make sure you're on your dedicated GPU.</p>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+<defs><pattern id="g" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#243040" stroke-width="1"/></pattern></defs>
+<rect width="1280" height="720" fill="#10161e"/><rect width="1280" height="720" fill="url(#g)"/>
+<path d="M51 102V51h51 M1178 51h51v51 M1229 618v51h-51 M102 669h-51v-51" fill="none" stroke="#ff9b21" stroke-width="3"/>
+<text x="50%" y="50%" fill="#5fd0e8" font-family="ui-monospace,monospace" font-size="32" text-anchor="middle" dominant-baseline="middle">Screenshot · 1280×720</text>
+</svg>

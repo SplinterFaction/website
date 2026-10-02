@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 480" width="1920" height="480">
+<defs><pattern id="g" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#243040" stroke-width="1"/></pattern></defs>
+<rect width="1920" height="480" fill="#0e131a"/><rect width="1920" height="480" fill="url(#g)"/>
+<path d="M34 68V34h34 M1852 34h34v34 M1886 412v34h-34 M68 446h-34v-34" fill="none" stroke="#ff9b21" stroke-width="3"/>
+<text x="50%" y="50%" fill="#5fd0e8" font-family="ui-monospace,monospace" font-size="21" text-anchor="middle" dominant-baseline="middle">Page banner · 1920×480</text>
+</svg>

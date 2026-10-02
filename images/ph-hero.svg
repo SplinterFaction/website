@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 900" width="1920" height="900">
+<defs><pattern id="g" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#243040" stroke-width="1"/></pattern></defs>
+<rect width="1920" height="900" fill="#0e131a"/><rect width="1920" height="900" fill="url(#g)"/>
+<path d="M64 128V64h64 M1792 64h64v64 M1856 772v64h-64 M128 836h-64v-64" fill="none" stroke="#ff9b21" stroke-width="3"/>
+<text x="50%" y="50%" fill="#5fd0e8" font-family="ui-monospace,monospace" font-size="40" text-anchor="middle" dominant-baseline="middle">Landing hero · 1920×900</text>
+</svg>

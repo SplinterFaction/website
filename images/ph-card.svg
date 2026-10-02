@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+<defs><pattern id="g" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#243040" stroke-width="1"/></pattern></defs>
+<rect width="800" height="500" fill="#0e131a"/><rect width="800" height="500" fill="url(#g)"/>
+<path d="M35 70V35h35 M730 35h35v35 M765 430v35h-35 M70 465h-35v-35" fill="none" stroke="#ff9b21" stroke-width="3"/>
+<text x="50%" y="50%" fill="#5fd0e8" font-family="ui-monospace,monospace" font-size="22" text-anchor="middle" dominant-baseline="middle">Card · 800×500</text>
+</svg>

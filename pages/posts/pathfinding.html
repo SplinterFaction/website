@@ -1,0 +1,23 @@
+<!-- pagetitle:Forty units, one bridge, zero patience -->
+<!-- pagelayout:page-html -->
+<!-- pagedate:07/14/2026 -->
+<!-- pageimage:/images/ph-16x9-alt.svg -->
+<!-- pageexcerpt:A long overdue write-up of the flow-field rewrite, why the old grid solver kept jamming at chokepoints, and the one bug that made an entire army politely queue for a bridge nobody was using. -->
+<!-- pagekeywords:Engineering,pathfinding,performance,netcode -->
+<!-- pageauthor: J. Okonkwo -->
+<!-- pagetype:article -->
+<!-- pagecategory: engineering -->
+
+<p class="lead">If you played the vertical slice, you saw units stack up at the eastern bridge on Ridgeline and refuse to move. Here is what was actually happening.</p>
+
+<h2>The old solver</h2>
+<p>We were running per-unit A* on a navigation grid with local avoidance layered on top. That is a perfectly reasonable thing to do for twenty units. At forty it started to cost more than the renderer, and at eighty it fell over.</p>
+<p>Worse, local avoidance and pathfinding disagreed at chokepoints. The path said go through the gap; avoidance said the gap is full; the unit oscillated between the two until something else killed it.</p>
+
+<h2>The rewrite</h2>
+<p>Flow fields. One field computed per destination per frame budget, shared by every unit heading there. Cost goes from per-unit to per-destination, which for an RTS is exactly the right shape: forty units usually want to go to about three places.</p>
+<p>Chokepoints resolve because the field itself encodes congestion. Units are not individually deciding to wait; the field is steeper elsewhere, so they route around, and if there genuinely is no way around they queue in an order that stays stable.</p>
+
+<h2>The bug</h2>
+<p>For two weeks, armies would occasionally route across the eastern bridge on Ridgeline regardless of destination. It turned out we were seeding the field from the wrong corner of the tile when the destination sat exactly on a tile boundary, which sent the whole field's gradient toward the map's centroid. The centroid of Ridgeline is the eastern bridge.</p>
+<p>One line. Two weeks.</p>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<defs><pattern id="g" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#243040" stroke-width="1"/></pattern></defs>
+<rect width="1920" height="1080" fill="#0e131a"/><rect width="1920" height="1080" fill="url(#g)"/>
+<path d="M77 154V77h77 M1766 77h77v77 M1843 926v77h-77 M154 1003h-77v-77" fill="none" stroke="#ff9b21" stroke-width="3"/>
+<text x="50%" y="50%" fill="#5fd0e8" font-family="ui-monospace,monospace" font-size="49" text-anchor="middle" dominant-baseline="middle">Key art · 1920×1080</text>
+</svg>

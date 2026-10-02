@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" width="800" height="1200">
+<defs><pattern id="g" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#243040" stroke-width="1"/></pattern></defs>
+<rect width="800" height="1200" fill="#0e131a"/><rect width="800" height="1200" fill="url(#g)"/>
+<path d="M57 114V57h57 M686 57h57v57 M743 1086v57h-57 M114 1143h-57v-57" fill="none" stroke="#ff9b21" stroke-width="3"/>
+<text x="50%" y="50%" fill="#5fd0e8" font-family="ui-monospace,monospace" font-size="36" text-anchor="middle" dominant-baseline="middle">Faction key art · 800×1200</text>
+</svg>

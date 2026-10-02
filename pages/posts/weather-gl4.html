@@ -1,0 +1,20 @@
+<!-- pagetitle:Rain, fog and a day that turns into night -->
+<!-- pagelayout:page-html -->
+<!-- pagedate:08/02/2026 -->
+<!-- pageimage:/images/ph-square.svg -->
+<!-- pageexcerpt:Weather, time of day and fog are GPU-driven effects on the GL4 pipeline. They look good, they're deterministic across every player in a match, and if your framerate is suffering they're the first thing to switch off. -->
+<!-- pagekeywords:weather,fog,rain,day night,gl4,deferred rendering,art,engineering -->
+<!-- pageauthor: Scary le Poo -->
+<!-- pagetype:article -->
+<!-- pagecategory: art, engineering -->
+
+<p class="lead">A battlefield you can read is the first job of the art. A battlefield that feels like a place is the second. The weather system is where those two jobs argue with each other.</p>
+
+<h2>What it does</h2>
+<p>Weather, a day-night cycle, rain and fog run as GPU-driven effects on SplinterFaction's GL4 pipeline alongside deferred lighting and instanced healthbars. Every player in a match sees the same sky at the same moment &mdash; the effects are driven from shared game state rather than each client's clock, so a night attack is a night attack for everyone.</p>
+
+<h2>What it must never do</h2>
+<p>Hide the game. The rule we hold every effect to is that unit silhouettes and the three bars beside every unit &mdash; health, heat, disruption &mdash; stay readable under the worst weather the system produces. Fog that made a Loz line disappear would be a mechanic, not a mood, and the game already has a mechanic for that: it's called cloaking, and only one faction gets it.</p>
+
+<h2>If it's costing you frames</h2>
+<p>Disable weather and time-of-day effects first, then lower shadow quality, then turn off non-essential widgets in the widget selector. Deferred rendering means the effects are cheaper than they look, but they're still the first thing to go on integrated graphics &mdash; and do check you're actually running on your dedicated GPU, because that's the fix more often than any setting is.</p>

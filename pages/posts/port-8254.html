@@ -1,0 +1,20 @@
+<!-- pagetitle:Nobody can join the game I'm hosting -->
+<!-- pagelayout:page-html -->
+<!-- pagedate:07/10/2026 -->
+<!-- pageimage:/images/ph-thumb.svg -->
+<!-- pageexcerpt:The single most common multiplayer problem, and it looks like a bug rather than a setting. Forward port 8254, or skip the whole question and use an autohost. -->
+<!-- pagekeywords:multiplayer,hosting,port forwarding,8254,autohost,spads,community -->
+<!-- pageauthor: Scary le Poo -->
+<!-- pagetype:article -->
+<!-- pagecategory: community -->
+
+<p class="lead">Your battle appears in the lobby. Nobody can connect to it. It isn't a bug.</p>
+
+<h2>The fix</h2>
+<p>Hosting directly from your own machine means other players connect to <em>you</em>, which means your router has to let them in. Forward TCP/UDP port 8254 to the local IP address of the computer that will host. That's the default; it can be changed on the Host a New Battle screen if 8254 is already in use on your network. Port forwarding is done in your router's admin interface, not in the game &mdash; search for your router model plus "port forwarding" if you haven't done it before.</p>
+
+<h2>The easier fix</h2>
+<p>Don't host. There are official SPADS autohosts &mdash; permanently-running servers that host battles for you. Join one, set up your game through its commands, play. No configuration, no network setup, no penalty, and it's what most players use anyway.</p>
+
+<h2>While we're here</h2>
+<p>If a multiplayer game desyncs or crashes, check first that everyone is on the same version &mdash; Coilbox handles this automatically, manual installs may not. If the versions match, please report it on GitHub with two attachments: your <code>infolog.txt</code> from your Recoil data directory, and the replay file for the match. Those two together are usually enough to find the cause. A report without them generally isn't actionable, however detailed the description.</p>

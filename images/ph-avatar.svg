@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+<defs><pattern id="g" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#243040" stroke-width="1"/></pattern></defs>
+<rect width="240" height="240" fill="#0e131a"/><rect width="240" height="240" fill="url(#g)"/>
+<path d="M24 48V24h24 M192 24h24v24 M216 192v24h-24 M48 216h-24v-24" fill="none" stroke="#ff9b21" stroke-width="3"/>
+<text x="50%" y="50%" fill="#5fd0e8" font-family="ui-monospace,monospace" font-size="14" text-anchor="middle" dominant-baseline="middle">Avatar · 240×240</text>
+</svg>

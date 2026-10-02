@@ -1,0 +1,1694 @@
+/*********************************************
+* BASTION — an RTS / strategy game theme
+* for Simple Website Framework
+**********************************************
+* Dark, angular, high-contrast. Built for a
+* game site: key art, faction pages, unit
+* databases, screenshots and a dev-log.
+*
+* No web fonts, no imports, no build step.
+* Everything decorative here is CSS.
+*
+* This file assumes the current css/base.css,
+* which already handles the reset, type scale,
+* links, lists, quotes, tables, code, focus
+* rings and reduced motion. None of that is
+* repeated. Section 1 reassigns the variables
+* base.css reads; everything after that is
+* either a framework container or a component.
+**********************************************
+* INDEX
+**********************************************
+1.  Tokens
+2.  Type treatment
+3.  Buttons & forms
+4.  Layout primitives
+5.  Panels, HUD frames & media
+6.  Framework containers
+7.  Brand bar & navigation
+8.  Hero & page banner
+9.  Landing page components
+10. Post archives
+11. Footer
+12. Utilities
+13. Print
+**********************************************/
+
+
+/*********************************************
+* 1. Tokens
+**********************************************
+* For most projects this section is the only
+* part of the file you need to touch. Change
+* --color-accent and the whole site re-skins.
+*
+* The palette is deliberately dark at every
+* scheme setting: a strategy game site that
+* flips to white in light mode looks broken
+* next to its own key art. If you do want a
+* light variant, reassign these same variables
+* inside a @media (prefers-color-scheme: light)
+* block — no rule below depends on the values.
+**********************************************/
+:root {
+	/* --- Overriding base.css --------------- */
+	--font-heading: var(--font-sans);
+
+	/* Type runs a little larger than the base
+	   default; long-form lore reads better dark
+	   on light at size. */
+	--font-size-base: 1.0625rem;
+
+	/* A taller heading scale than the baseline —
+	   a game front page wants a real headline. */
+	--h1: clamp(2.3rem,  1.55rem + 3.4vw, 4rem);
+	--h2: clamp(1.7rem,  1.35rem + 1.7vw, 2.5rem);
+	--h3: clamp(1.35rem, 1.22rem + 0.65vw, 1.7rem);
+
+	--color-bg:         #0b0e12;
+	--color-surface:    #131920;
+	--color-border:     #232d38;
+	--color-text:       #c2ccd6;
+	--color-heading:    #f0f4f8;
+	--color-muted:      #8593a1;
+	--color-link:       #5fd0e8;
+	--color-link-hover: #9ae6f4;
+	--color-focus:      var(--color-accent);
+
+	--radius: 0;   /* angular by default */
+
+	/* --- Added by this theme --------------- */
+
+	/* Ember. The single loudest colour on the
+	   site: primary buttons, corner brackets,
+	   active nav, section rules. */
+	--color-accent:      #ff9b21;
+	--color-accent-dim:  #c9761a;
+	--color-accent-soft: rgba(255, 155, 33, 0.12);
+
+	/* Signal. Secondary highlight — links,
+	   stat figures, faction B. */
+	--color-signal:      #5fd0e8;
+	--color-signal-soft: rgba(95, 208, 232, 0.12);
+
+	--color-surface-2:   #1a222b;  /* raised panel  */
+	--color-surface-3:   #212b36;  /* input, hover  */
+	--color-border-firm: #35434f;
+	--color-shadow:      rgba(0, 0, 0, 0.55);
+
+	--color-bg-inverse:   #f0f4f8;
+	--color-text-inverse: #0b0e12;
+
+	/* Spacing steps derived from base.css's
+	   --space, so changing that one value
+	   rescales the whole theme proportionally. */
+	--step-xs:  calc(var(--space) * 0.5);
+	--step-sm:  var(--space);
+	--step-md:  calc(var(--space) * 1.5);
+	--step-lg:  calc(var(--space) * 2);
+	--step-xl:  calc(var(--space) * 3);
+	--step-2xl: calc(var(--space) * 4.5);
+	--step-3xl: calc(var(--space) * 7);
+
+	--width-page: 78rem;   /* outer container */
+	--width-wide: 96rem;   /* escape hatch    */
+	--gutter:     var(--step-md);
+
+	--border-hair: 1px solid var(--color-border);
+	--transition:  160ms ease;
+
+	/* Size of the clipped corner on panels and
+	   buttons. Set to 0 for square everything. */
+	--cut: 12px;
+
+	/* Headings are uppercase across this theme.
+	   Set to `none` here to turn that off
+	   everywhere at once. */
+	--heading-transform: uppercase;
+	--heading-tracking: 0.02em;
+}
+
+/* A 100%-wide bleed element can still push the
+   document a pixel or two wide. `clip` contains
+   it; `hidden` would silently break the sticky
+   nav by turning the body into a scroll port. */
+html { overflow-x: clip; }
+
+body {
+	overflow-x: clip;
+	background-image:
+		radial-gradient(ellipse 90% 60% at 50% -10%, #16202b 0%, transparent 70%);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+
+/*********************************************
+* 2. Type treatment
+**********************************************
+* base.css sets the sizes and rhythm. This adds
+* the voice: condensed, uppercase, tracked-out
+* headings against relaxed body copy.
+**********************************************/
+h1, h2 {
+	font-weight: 800;
+	text-transform: var(--heading-transform);
+	letter-spacing: var(--heading-tracking);
+	/* Variable system faces narrow slightly;
+	   static ones ignore this harmlessly. */
+	font-stretch: 92%;
+}
+
+h3, h4 {
+	font-weight: 700;
+	letter-spacing: 0.01em;
+}
+
+h5, h6 {
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.09em;
+	color: var(--color-muted);
+}
+
+/* Small tracked-out label above a heading. */
+.eyebrow {
+	display: block;
+	margin-bottom: var(--step-xs);
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--color-accent);
+}
+
+.eyebrow-signal { color: var(--color-signal); }
+.eyebrow-muted  { color: var(--color-muted); }
+
+/* Short accent rule, usually under a heading. */
+.rule {
+	width: 64px;
+	height: 3px;
+	margin: var(--step-sm) 0 var(--step-md);
+	background: var(--color-accent);
+	border: 0;
+}
+
+.rule-center { margin-left: auto; margin-right: auto; }
+
+/* Oversized display line for the hero. */
+.display {
+	font-family: var(--font-heading);
+	font-size: clamp(2.6rem, 1.3rem + 5.4vw, 5.5rem);
+	font-weight: 800;
+	line-height: 0.98;
+	letter-spacing: -0.005em;
+	text-transform: uppercase;
+	color: var(--color-heading);
+	text-wrap: balance;
+	margin: 0;
+}
+
+/* A word inside .display that should burn. */
+.display em,
+.accent {
+	font-style: normal;
+	color: var(--color-accent);
+}
+
+.lead { color: var(--color-muted); }
+
+/* Machine-readable looking meta text. */
+.mono {
+	font-family: var(--font-mono);
+	font-size: 0.85em;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+}
+
+
+/*********************************************
+* 3. Buttons & forms
+**********************************************
+* The notched corner is drawn with a gradient
+* rather than clip-path on purpose: clip-path
+* would also clip the keyboard focus ring, and
+* the ring is the one thing that must never be
+* trimmed.
+**********************************************/
+.btn,
+button,
+input[type="submit"],
+input[type="button"] {
+	display: inline-block;
+	width: auto;
+	padding: calc(var(--step-xs) * 1.4) var(--step-lg);
+	font: inherit;
+	font-size: 0.9rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	line-height: var(--line-height-tight);
+	text-align: center;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: var(--color-text-inverse);
+	background: linear-gradient(315deg, transparent 0 var(--cut), var(--color-accent) var(--cut));
+	border: 0;
+	border-radius: 0;
+	cursor: pointer;
+	transition: filter var(--transition), transform var(--transition);
+}
+
+.btn:hover,
+button:hover,
+input[type="submit"]:hover {
+	color: var(--color-text-inverse);
+	filter: brightness(1.14);
+	text-decoration: none;
+}
+
+.btn:active,
+button:active { transform: translateY(1px); }
+
+/* Outlined. Uses a border rather than a
+   gradient so the notch is drawn by an inset
+   pseudo-element instead. */
+.btn-ghost {
+	position: relative;
+	color: var(--color-heading);
+	background: transparent;
+	box-shadow: inset 0 0 0 1px var(--color-border-firm);
+	clip-path: polygon(
+		0 0, 100% 0,
+		100% calc(100% - var(--cut)),
+		calc(100% - var(--cut)) 100%,
+		0 100%);
+}
+
+.btn-ghost:hover {
+	color: var(--color-heading);
+	background: var(--color-surface-2);
+	box-shadow: inset 0 0 0 1px var(--color-accent);
+	filter: none;
+}
+
+/* clip-path trims the outline, so give ghost
+   buttons their focus indicator inside. */
+.btn-ghost:focus-visible {
+	outline: 0;
+	box-shadow: inset 0 0 0 3px var(--color-accent);
+}
+
+.btn-signal {
+	color: var(--color-text-inverse);
+	background: linear-gradient(315deg, transparent 0 var(--cut), var(--color-signal) var(--cut));
+}
+
+.btn-small {
+	padding: calc(var(--space) * 0.35) var(--step-sm);
+	font-size: 0.78rem;
+	--cut: 8px;
+}
+
+.btn-block {
+	display: block;
+	width: 100%;
+}
+
+/* Forms ---------------------------------- */
+.field { margin-bottom: var(--step-sm); }
+
+.field label {
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+}
+
+.field input,
+.field select,
+.field textarea { width: 100%; }
+
+input, select, textarea {
+	background: var(--color-surface-2);
+	border-color: var(--color-border-firm);
+	color: var(--color-heading);
+}
+
+input::placeholder,
+textarea::placeholder { color: #5f6c79; }
+
+.hint {
+	display: block;
+	margin-top: calc(var(--space) * 0.25);
+	font-size: 0.85em;
+	color: var(--color-muted);
+}
+
+
+/*********************************************
+* 4. Layout primitives
+**********************************************
+*   .band     full-width horizontal band
+*   .wrap     centred max-width container
+*   .stack    even vertical gap between children
+*   .cluster  horizontal group that wraps
+*
+* Columns come from css/flexgridsystem.css —
+* row / column / flex-basis-*. This theme does
+* not duplicate that. Note .column centres its
+* text; components below reset that themselves.
+*
+* Reading width comes from .measure in base.css.
+*
+* The band is NOT called .section: the
+* page-*.php templates already emit
+* <div class="section group">, so styling
+* .section would pad the inside of every page.
+**********************************************/
+.band {
+	position: relative;
+	padding-top: var(--step-2xl);
+	padding-bottom: var(--step-2xl);
+}
+
+.band-tight { padding-top: var(--step-lg); padding-bottom: var(--step-lg); }
+.band-loose { padding-top: var(--step-3xl); padding-bottom: var(--step-3xl); }
+
+.band-sunk    { background: var(--color-surface); }
+.band-raised  { background: var(--color-surface-2); }
+.band-line    { border-top: var(--border-hair); }
+.band-line-b  { border-bottom: var(--border-hair); }
+
+/* A band carrying key art behind its content.
+   Set the image inline:
+   <section class="band band-art" style="background-image:url(...)"> */
+.band-art {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	isolation: isolate;
+}
+
+.band-art::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: linear-gradient(180deg,
+		rgba(11, 14, 18, 0.82) 0%,
+		rgba(11, 14, 18, 0.92) 100%);
+}
+
+/* Faint tactical grid over a band. Decorative
+   only — sits behind content and ignores
+   pointer events. */
+.band-grid::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0.5;
+	background-image:
+		linear-gradient(var(--color-border) 1px, transparent 1px),
+		linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+	background-size: 64px 64px;
+	mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 20%, transparent 75%);
+}
+
+.band > .wrap { position: relative; z-index: 1; }
+
+.wrap {
+	width: 100%;
+	max-width: var(--width-page);
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: var(--gutter);
+	padding-right: var(--gutter);
+}
+
+.wrap-wide   { max-width: var(--width-wide); }
+.wrap-narrow { max-width: 52rem; }
+
+.measure-center {
+	max-width: var(--measure);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Owl selector: gap between siblings only, so
+   the first and last child stay flush. Children's
+   own margins are zeroed first, otherwise a <p>
+   adds its bottom margin on top of the gap. */
+.stack > *      { margin-top: 0; margin-bottom: 0; }
+.stack > * + *  { margin-top: var(--step-sm); }
+.stack > * + :is(h2, h3, h4) { margin-top: var(--step-lg); }
+
+.stack-lg > * + * { margin-top: var(--step-lg); }
+.stack-xl > * + * { margin-top: var(--step-xl); }
+
+.cluster {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--step-sm);
+}
+
+.cluster-center  { justify-content: center; }
+.cluster-between { justify-content: space-between; }
+
+/* Reverse a .row so an image sits on the other
+   side. Wrapped lines still stack top-to-bottom
+   in document order, so mobile is unaffected. */
+.row-flip { flex-direction: row-reverse; }
+
+/* Section heading block. */
+.bandhead {
+	max-width: 46rem;
+	margin-bottom: var(--step-xl);
+}
+
+.bandhead h2 { margin-top: 0; margin-bottom: var(--step-sm); }
+.bandhead > :last-child { margin-bottom: 0; }
+
+.bandhead-center {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+
+/*********************************************
+* 5. Panels, HUD frames & media
+**********************************************/
+
+/* Flat bordered box. Resets the centring that
+   .column applies so card text reads normally. */
+.panel {
+	position: relative;
+	text-align: left;
+	padding: var(--step-md);
+	background: var(--color-surface);
+	border: var(--border-hair);
+}
+
+.panel > :last-child { margin-bottom: 0; }
+
+.panel-raised { background: var(--color-surface-2); }
+.panel-flush  { padding: 0; }
+
+/* Angular panel: two opposite corners notched.
+   Only for containers that aren't themselves
+   focusable — clip-path trims focus rings. */
+.panel-cut {
+	border: 0;
+	clip-path: polygon(
+		var(--cut) 0, 100% 0,
+		100% calc(100% - var(--cut)),
+		calc(100% - var(--cut)) 100%,
+		0 100%, 0 var(--cut));
+}
+
+/* Accent edge, usually on the left. */
+.panel-edge { border-left: 3px solid var(--color-accent); }
+.panel-edge-signal { border-left-color: var(--color-signal); }
+
+/* Corner brackets. Drawn with pseudo-elements
+   rather than clip-path so nothing is trimmed
+   and the box stays rectangular. */
+.hud { position: relative; }
+
+.hud::before,
+.hud::after {
+	content: "";
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	border: 2px solid var(--color-accent);
+	pointer-events: none;
+}
+
+.hud::before {
+	top: -1px; left: -1px;
+	border-right: 0;
+	border-bottom: 0;
+}
+
+.hud::after {
+	right: -1px; bottom: -1px;
+	border-left: 0;
+	border-top: 0;
+}
+
+.hud-signal::before,
+.hud-signal::after { border-color: var(--color-signal); }
+
+.hud-quiet::before,
+.hud-quiet::after { border-color: var(--color-border-firm); }
+
+/* Hover lift for cards that link somewhere. */
+.lift { transition: transform var(--transition), border-color var(--transition); }
+
+.lift:hover {
+	transform: translateY(-3px);
+	border-color: var(--color-border-firm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.lift:hover { transform: none; }
+}
+
+/* Media ----------------------------------
+   .mediaframe holds an image at a fixed ratio
+   so a placeholder and the real screenshot that
+   replaces it occupy exactly the same space. */
+.mediaframe {
+	position: relative;
+	overflow: hidden;
+	background: var(--color-surface-2);
+	border: var(--border-hair);
+}
+
+.mediaframe img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.ratio-21x9  { aspect-ratio: 21 / 9; }
+.ratio-16x9  { aspect-ratio: 16 / 9; }
+.ratio-4x3   { aspect-ratio: 4 / 3; }
+.ratio-1x1   { aspect-ratio: 1 / 1; }
+.ratio-3x4   { aspect-ratio: 3 / 4; }
+.ratio-2x3   { aspect-ratio: 2 / 3; }
+
+.mediaframe .ratio-16x9,
+.ratio-16x9 img { height: 100%; }
+
+/* Caption bar along the bottom of a frame. */
+.mediacaption {
+	position: absolute;
+	right: 0; bottom: 0; left: 0;
+	padding: var(--step-xs) var(--step-sm);
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--color-heading);
+	background: linear-gradient(180deg, transparent, rgba(11, 14, 18, 0.9) 60%);
+}
+
+/* Small uppercase label. */
+.tag {
+	display: inline-block;
+	padding: 0.2em 0.65em;
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--color-accent);
+	background: var(--color-accent-soft);
+	border: 1px solid var(--color-accent-dim);
+	text-decoration: none;
+}
+
+.tag-signal {
+	color: var(--color-signal);
+	background: var(--color-signal-soft);
+	border-color: var(--color-signal);
+}
+
+.tag-quiet {
+	color: var(--color-muted);
+	background: transparent;
+	border-color: var(--color-border-firm);
+}
+
+a.tag:hover {
+	color: var(--color-text-inverse);
+	background: var(--color-accent);
+	text-decoration: none;
+}
+
+
+/*********************************************
+* 6. Framework containers
+**********************************************
+* .contentcontainer, .pagetitle and .content are
+* written by the page-*.php templates. Keep the
+* names so every layout keeps working.
+**********************************************/
+.contentcontainer {
+	width: 100%;
+	max-width: var(--width-page);
+	margin: 0 auto;
+	padding: var(--step-2xl) var(--gutter);
+}
+
+.pagetitle {
+	max-width: var(--measure);
+	margin-bottom: var(--step-lg);
+	padding-bottom: var(--step-md);
+	border-bottom: var(--border-hair);
+}
+
+.pagetitle h1 { margin: 0; }
+
+.pagedate,
+.pageauthor {
+	margin: var(--step-xs) 0 0;
+	font-family: var(--font-mono);
+	font-size: 0.8rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+}
+
+.pageauthor i { font-style: normal; color: var(--color-text); }
+
+.content { max-width: var(--measure); }
+
+/* Opt out of the reading measure for a page or
+   a single block that needs the full width. */
+.content-wide  { max-width: none; }
+.content .full { max-width: none; }
+
+/* Used by page-wide.php — title keeps its
+   measure, body runs the full container. */
+.widelayout .content { max-width: none; }
+
+/* Used by page-blank.php and page-landing.php:
+   sections manage their own width, so the
+   wrapper adds nothing. */
+.blanklayout {
+	max-width: none;
+	padding: 0;
+}
+
+/* Long-form article body inside .content. */
+.content img { margin-bottom: var(--space); }
+
+.content h2 { padding-top: var(--step-xs); }
+
+.content hr {
+	border-top-color: var(--color-border);
+	margin: var(--step-xl) 0;
+}
+
+/* Image helpers. base.css already stops images
+   overflowing; these cap them further. */
+img.framed { border: var(--border-hair); }
+img.round  { border-radius: 50%; }
+img.tiny   { max-width: 150px; }
+img.small  { max-width: 300px; }
+img.medium { max-width: 600px; }
+img.large  { max-width: 1000px; }
+img.full   { width: 100%; }
+
+
+/*********************************************
+* 7. Brand bar & navigation
+**********************************************
+* Colours only. Every colour in navigation.css
+* is a custom property, so this reassigns them
+* and then does nothing but spacing.
+*
+* Leave `theme: ''` in navigation-options.php.
+* 'light' and 'dark' set the same variables to
+* fixed values and would stop the bar following
+* the palette.
+**********************************************/
+:root {
+	/* Bar and dropdown backgrounds */
+	--bottomlevel-bg-color:       rgba(11, 14, 18, 0.94);
+	--bottomlevel-bg-color-hover: rgba(26, 34, 43, 0.98);
+	--firstlevel-bg-color:        #131920;
+	--firstlevel-bg-color-hover:  #1a222b;
+	--secondlevel-bg-color:       #131920;
+	--secondlevel-bg-color-hover: #1a222b;
+
+	/* Foreground */
+	--nav-color:               #dbe3ea;
+	--nav-icon-color:          #ff9b21;
+	--nav-divider-color:       rgba(255, 255, 255, 0.09);
+	--nav-divider-color-faint: rgba(255, 255, 255, 0.05);
+
+	/* Mobile panel */
+	--nav-mobile-bg:        #0f1319;
+	--nav-mobile-subnav-bg: rgba(255, 255, 255, 0.04);
+
+	/* Effects */
+	--nav-text-shadow:     none;
+	--nav-dropdown-shadow: 0 10px 24px var(--color-shadow);
+	--nav-hover-shadow:    none;
+}
+
+/* Brand bar sits above the nav and scrolls away
+   with the page; the nav below it is sticky. */
+.brandbar {
+	background: var(--color-bg);
+	border-bottom: var(--border-hair);
+}
+
+.brandbar-inner {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--step-sm);
+	padding-top: var(--step-sm);
+	padding-bottom: var(--step-sm);
+}
+
+.brand {
+	display: flex;
+	align-items: center;
+	gap: var(--step-xs);
+	text-decoration: none;
+	color: var(--color-heading);
+}
+
+.brand:hover { color: var(--color-heading); text-decoration: none; }
+
+.brand img { width: 40px; height: 40px; }
+
+.brandname {
+	display: block;
+	font-family: var(--font-heading);
+	font-size: 1.15rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	line-height: 1.1;
+	text-transform: uppercase;
+}
+
+.brandtag {
+	display: block;
+	font-family: var(--font-mono);
+	font-size: 0.66rem;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+}
+
+.stickynav {
+	background: rgba(11, 14, 18, 0.94);
+	backdrop-filter: blur(6px);
+	border-bottom: 1px solid var(--color-border);
+	box-shadow: 0 1px 0 rgba(255, 155, 33, 0.14);
+}
+
+.stellarnav {
+	font-size: 0.82rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.stellarnav > ul > li > a { padding: var(--step-sm) var(--step-md); }
+
+.stellarnav ul ul {
+	width: 250px;
+	border: var(--border-hair);
+	letter-spacing: 0.08em;
+}
+
+.stellarnav ul ul ul { left: 250px; }
+.stellarnav li.drop-left ul ul { right: 250px; }
+
+.stellarnav ul ul li a { padding: 12px 15px; }
+
+/* navigation.css draws the sliding hover
+   underline with currentColor. Ember reads
+   better than the link colour here, and 4px is
+   heavy under 0.82rem type. */
+.stellarnav a::before {
+	height: 2px;
+	border-radius: 0;
+	background-color: var(--color-accent);
+}
+
+/* Skip link — visible only when focused. */
+.skiplink {
+	position: absolute;
+	top: 0;
+	left: -9999px;
+	z-index: 9999;
+	padding: var(--step-xs) var(--step-sm);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--color-text-inverse);
+	background: var(--color-accent);
+	text-decoration: none;
+}
+
+.skiplink:focus {
+	left: 0;
+	color: var(--color-text-inverse);
+}
+
+
+/*********************************************
+* 8. Hero & page banner
+**********************************************
+* The hero belongs to page-landing.php; the
+* shorter banner is emitted by header.php on
+* every other page. Both take their background
+* from the page's own pageimage metadata, set
+* inline on the element.
+**********************************************/
+.hero {
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	min-height: min(84vh, 780px);
+	padding-top: var(--step-3xl);
+	padding-bottom: var(--step-xl);
+	background-color: var(--color-surface);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	isolation: isolate;
+}
+
+/* Two scrims: one vertical so the headline sits
+   on near-black, one horizontal so the left
+   column stays legible over busy art. */
+.hero::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background:
+		linear-gradient(90deg, rgba(11, 14, 18, 0.94) 0%, rgba(11, 14, 18, 0.55) 55%, rgba(11, 14, 18, 0.35) 100%),
+		linear-gradient(0deg, rgba(11, 14, 18, 1) 2%, rgba(11, 14, 18, 0.15) 45%, rgba(11, 14, 18, 0.6) 100%);
+}
+
+/* Optional scanline texture. Purely decorative. */
+.hero::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	opacity: 0.5;
+	background-image: repeating-linear-gradient(
+		180deg,
+		rgba(255, 255, 255, 0.022) 0 1px,
+		transparent 1px 3px);
+}
+
+.heroinner { max-width: 46rem; }
+
+.hero .display { margin-bottom: var(--step-sm); }
+
+.herosub {
+	max-width: 38rem;
+	margin: 0 0 var(--step-lg);
+	font-size: 1.15rem;
+	line-height: 1.55;
+	color: #d3dae1;
+}
+
+/* Strip of hard facts under the hero: release
+   window, platforms, player counts. */
+.herostrip {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--step-xs) var(--step-lg);
+	padding: var(--step-sm) 0 0;
+	margin-top: var(--step-lg);
+	border-top: 1px solid rgba(255, 255, 255, 0.12);
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+}
+
+.herostrip b {
+	color: var(--color-heading);
+	font-weight: 700;
+}
+
+/* Interior page banner — same idea, less of it. */
+.pagebanner {
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	min-height: 260px;
+	padding-top: var(--step-xl);
+	padding-bottom: var(--step-lg);
+	background-color: var(--color-surface);
+	background-size: cover;
+	background-position: center;
+	isolation: isolate;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.pagebanner::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: linear-gradient(0deg,
+		rgba(11, 14, 18, 0.97) 0%,
+		rgba(11, 14, 18, 0.7) 60%,
+		rgba(11, 14, 18, 0.55) 100%);
+}
+
+.pagebanner .bannertitle {
+	display: block;
+	font-family: var(--font-heading);
+	font-size: var(--h1);
+	font-weight: 800;
+	line-height: 1.05;
+	letter-spacing: var(--heading-tracking);
+	text-transform: uppercase;
+	color: var(--color-heading);
+	text-wrap: balance;
+	margin: 0;
+}
+
+/* When a banner is present the page title has
+   already been shown, so the in-page one is
+   suppressed by the layout, not hidden here. */
+.breadcrumb {
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+	margin-bottom: var(--step-xs);
+}
+
+.breadcrumb a { color: var(--color-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--color-accent); }
+
+
+/*********************************************
+* 9. Landing page components
+**********************************************
+* Everything a game front page tends to need.
+* All of it is optional; a page that doesn't use
+* a component costs nothing.
+**********************************************/
+
+/* --- Stat bar ---------------------------- */
+.statbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--step-md);
+}
+
+.stat {
+	flex: 1 1 160px;
+	padding: var(--step-sm) var(--step-md);
+	background: var(--color-surface);
+	border-left: 2px solid var(--color-accent);
+}
+
+.statnum {
+	display: block;
+	font-family: var(--font-heading);
+	font-size: clamp(1.8rem, 1.3rem + 1.8vw, 2.6rem);
+	font-weight: 800;
+	line-height: 1;
+	color: var(--color-heading);
+}
+
+.statlabel {
+	display: block;
+	margin-top: 0.35em;
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+}
+
+/* --- Feature row -------------------------
+   Art on one side, copy on the other. Built on
+   the framework grid: .row + .column. Add
+   .row-flip to swap sides. */
+.featurerow { align-items: center; }
+
+.featurerow .column { text-align: left; }
+
+.featurecopy { max-width: 34rem; }
+
+/* --- Faction card ------------------------ */
+.faction {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+	text-align: left;
+	background: var(--color-surface);
+	border: var(--border-hair);
+}
+
+.factionart {
+	position: relative;
+	aspect-ratio: 3 / 4;
+	overflow: hidden;
+	background: var(--color-surface-2);
+}
+
+.factionart img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 400ms ease;
+}
+
+.faction:hover .factionart img { transform: scale(1.04); }
+
+@media (prefers-reduced-motion: reduce) {
+	.faction:hover .factionart img { transform: none; }
+}
+
+.factionart::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(0deg, rgba(11, 14, 18, 0.95) 0%, transparent 55%);
+}
+
+/* The emblem is also an <img> inside .factionart,
+   so it has to out-specify the cover rule above or
+   it gets stretched over the key art. */
+.factionart img.factionemblem {
+	position: absolute;
+	top: var(--step-sm);
+	left: var(--step-sm);
+	z-index: 1;
+	width: 52px;
+	height: 52px;
+	object-fit: contain;
+	transition: none;
+}
+
+.faction:hover .factionart img.factionemblem { transform: none; }
+
+.factionname {
+	position: absolute;
+	right: var(--step-md);
+	bottom: var(--step-sm);
+	left: var(--step-md);
+	z-index: 1;
+	margin: 0;
+	font-size: 1.35rem;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--color-heading);
+}
+
+.factionbody {
+	flex: 1 1 auto;
+	padding: var(--step-md);
+}
+
+.factionbody > :last-child { margin-bottom: 0; }
+
+/* Traits list inside a faction card. */
+.traits {
+	margin: 0 0 var(--step-sm);
+	padding: 0;
+	list-style: none;
+	font-size: 0.92em;
+}
+
+.traits li {
+	position: relative;
+	padding-left: 1.1em;
+	margin-bottom: 0.3em;
+	color: var(--color-muted);
+}
+
+.traits li::before {
+	content: "";
+	position: absolute;
+	top: 0.55em;
+	left: 0;
+	width: 6px;
+	height: 6px;
+	background: var(--color-accent);
+	transform: rotate(45deg);
+}
+
+/* --- Unit card --------------------------- */
+.unit {
+	display: flex;
+	gap: var(--step-sm);
+	align-items: flex-start;
+	text-align: left;
+	padding: var(--step-sm);
+	background: var(--color-surface);
+	border: var(--border-hair);
+}
+
+.unit img {
+	flex: 0 0 auto;
+	width: 76px;
+	height: 76px;
+	object-fit: cover;
+	background: var(--color-surface-2);
+	border: 1px solid var(--color-border-firm);
+}
+
+.unitbody { min-width: 0; }
+
+.unitname {
+	margin: 0 0 0.15em;
+	font-size: 1.02rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--color-heading);
+}
+
+.unitrole {
+	display: block;
+	margin-bottom: 0.4em;
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--color-accent);
+}
+
+.unitbody p { margin-bottom: 0; font-size: 0.92em; color: var(--color-muted); }
+
+/* --- Data table -------------------------- */
+.datatable {
+	width: 100%;
+	font-size: 0.94em;
+}
+
+.datatable th {
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+	background: var(--color-surface);
+	border-bottom-color: var(--color-border-firm);
+}
+
+.datatable td { border-bottom-color: var(--color-border); }
+.datatable tbody tr:hover td { background: var(--color-surface); }
+.datatable td:first-child { color: var(--color-heading); font-weight: 600; }
+
+/* --- Roadmap ----------------------------- */
+.roadmap {
+	margin: 0;
+	padding: 0 0 0 var(--step-md);
+	list-style: none;
+	border-left: 1px solid var(--color-border-firm);
+}
+
+.roadmapitem {
+	position: relative;
+	padding-bottom: var(--step-lg);
+}
+
+.roadmapitem:last-child { padding-bottom: 0; }
+
+.roadmapitem::before {
+	content: "";
+	position: absolute;
+	top: 0.45em;
+	left: calc(var(--step-md) * -1 - 5px);
+	width: 9px;
+	height: 9px;
+	background: var(--color-bg);
+	border: 2px solid var(--color-border-firm);
+	transform: rotate(45deg);
+}
+
+.roadmapitem.is-done::before   { background: var(--color-accent); border-color: var(--color-accent); }
+.roadmapitem.is-active::before { background: var(--color-signal); border-color: var(--color-signal); }
+
+.roadmapitem h3 { margin: 0 0 0.2em; font-size: 1.1rem; }
+.roadmapitem > :last-child { margin-bottom: 0; }
+
+/* --- Callout / quote --------------------- */
+.callout {
+	padding: var(--step-md) var(--step-lg);
+	background: var(--color-surface);
+	border-left: 3px solid var(--color-accent);
+}
+
+.callout > :last-child { margin-bottom: 0; }
+
+/* Press quote block for the landing page. */
+.quotecard {
+	text-align: left;
+	padding: var(--step-md);
+	background: var(--color-surface);
+	border: var(--border-hair);
+}
+
+.quotecard blockquote {
+	margin: 0 0 var(--step-sm);
+	padding: 0;
+	border: 0;
+	font-size: 1.05rem;
+	color: var(--color-heading);
+}
+
+.quotecard cite {
+	display: block;
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	font-style: normal;
+	color: var(--color-accent);
+}
+
+/* --- Signup / CTA band ------------------- */
+.ctaband {
+	text-align: center;
+	background:
+		linear-gradient(180deg, var(--color-surface) 0%, var(--color-bg) 100%);
+	border-top: 1px solid var(--color-border);
+	border-bottom: 1px solid var(--color-border);
+}
+
+.ctaband .display { margin-bottom: var(--step-sm); }
+
+
+/*********************************************
+* 10. Post archives
+**********************************************
+* Used by postarchives.php,
+* postarchives-styled.php and
+* postarchives-featured.php. A post is a
+* "dispatch" here; rename freely.
+**********************************************/
+
+/* Category archive header strip.
+   Rendered by the archive layouts when the page
+   carries a postcategory tag, so a filtered view
+   always says so — and offers the matching feed,
+   which the framework exposes as ?rss=<category>. */
+.catbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--step-xs) var(--step-md);
+	margin-bottom: var(--step-lg);
+	padding: var(--step-xs) var(--step-sm);
+	background: var(--color-surface);
+	border-left: 3px solid var(--color-signal);
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+}
+
+.catbar b { color: var(--color-heading); font-weight: 700; }
+
+.catbar a { color: var(--color-signal); text-decoration: none; }
+.catbar a:hover { color: var(--color-link-hover); text-decoration: underline; }
+
+/* Categories on the post's own page, under the
+   byline in .pagetitle. */
+.pagecategories {
+	margin: var(--step-xs) 0 0;
+	font-family: var(--font-mono);
+	font-size: 0.8rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+}
+
+.pagecategories .tag { margin-right: 0.3em; }
+
+/* Plain list variant. */
+.postarchive-item {
+	margin-bottom: var(--step-lg);
+	padding-bottom: var(--step-lg);
+	border-bottom: var(--border-hair);
+}
+
+.postarchive-item:last-child { margin-bottom: 0; border-bottom: 0; }
+.postarchive-item h2,
+.postarchive-item h3 { margin-top: 0; }
+
+/* Card variant. The whole card is one flex
+   column so the footer meta lines up across a
+   row of unequal excerpts. */
+.dispatch {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+	text-align: left;
+	background: var(--color-surface);
+	border: var(--border-hair);
+}
+
+.dispatchmedia {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	background: var(--color-surface-2);
+	border-bottom: var(--border-hair);
+}
+
+.dispatchmedia img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 400ms ease;
+}
+
+.dispatch:hover .dispatchmedia img { transform: scale(1.03); }
+
+@media (prefers-reduced-motion: reduce) {
+	.dispatch:hover .dispatchmedia img { transform: none; }
+}
+
+.dispatchtag {
+	position: absolute;
+	top: var(--step-xs);
+	left: var(--step-xs);
+	z-index: 1;
+}
+
+.dispatchbody {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	padding: var(--step-md);
+}
+
+.dispatchtitle {
+	margin: 0 0 var(--step-xs);
+	font-size: 1.18rem;
+	font-weight: 700;
+	line-height: 1.25;
+	letter-spacing: 0.01em;
+}
+
+.dispatchtitle a {
+	color: var(--color-heading);
+	text-decoration: none;
+}
+
+.dispatchtitle a:hover {
+	color: var(--color-accent);
+	text-decoration: none;
+}
+
+.dispatchmeta {
+	margin: 0 0 var(--step-sm);
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+}
+
+.dispatchmeta i { font-style: normal; color: var(--color-text); }
+
+.dispatchexcerpt {
+	flex: 1 1 auto;
+	margin-bottom: var(--step-sm);
+	font-size: 0.94em;
+	color: var(--color-muted);
+}
+
+/* Category line under a card's meta. Only rendered
+   when a post carries more than one category — a
+   single category is already shown as the chip on
+   the artwork, and repeating it is noise. */
+.dispatchcats {
+	margin: calc(var(--space) * -0.5) 0 var(--step-sm);
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+}
+
+.dispatchcats a {
+	color: var(--color-signal);
+	text-decoration: none;
+}
+
+.dispatchcats a:hover {
+	color: var(--color-link-hover);
+	text-decoration: underline;
+}
+
+.dispatchmore {
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: var(--color-accent);
+}
+
+.dispatchmore:hover { color: var(--color-link-hover); text-decoration: none; }
+.dispatchmore::after { content: " →"; }
+
+/* Lead story on postarchives-featured.php. */
+.dispatch-lead {
+	margin-bottom: var(--step-xl);
+	background: var(--color-surface);
+	border: var(--border-hair);
+}
+
+.dispatch-lead .row { align-items: stretch; }
+.dispatch-lead .column { margin: 0; padding: 0; text-align: left; }
+
+.dispatch-lead .dispatchmedia {
+	height: 100%;
+	min-height: 260px;
+	aspect-ratio: auto;
+	border-bottom: 0;
+	border-right: var(--border-hair);
+}
+
+.dispatch-lead .dispatchbody { padding: var(--step-lg); }
+
+.dispatch-lead .dispatchtitle {
+	font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+@media screen and (max-width: 1000px) {
+	.dispatch-lead .dispatchmedia {
+		border-right: 0;
+		border-bottom: var(--border-hair);
+		aspect-ratio: 16 / 9;
+		min-height: 0;
+	}
+}
+
+/* Pagination, emitted by the archive layouts. */
+.pagination {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--step-xs);
+	margin-top: var(--step-xl);
+	padding-top: var(--step-md);
+	border-top: var(--border-hair);
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--color-muted);
+}
+
+.pagination a,
+.pagination span {
+	display: inline-block;
+	min-width: 2.4em;
+	padding: 0.45em 0.7em;
+	text-align: center;
+	text-decoration: none;
+	border: 1px solid var(--color-border);
+}
+
+.pagination a { color: var(--color-text); }
+
+.pagination a:hover {
+	color: var(--color-accent);
+	border-color: var(--color-accent);
+	text-decoration: none;
+}
+
+.pagination span {
+	color: var(--color-text-inverse);
+	background: var(--color-accent);
+	border-color: var(--color-accent);
+	font-weight: 700;
+}
+
+
+/*********************************************
+* 11. Footer
+**********************************************/
+.footercontainer {
+	margin-top: 0;
+	padding-top: var(--step-2xl);
+	padding-bottom: var(--step-lg);
+	background: #080b0e;
+	border-top: 1px solid var(--color-border);
+	font-size: 0.95rem;
+}
+
+.footercontent {
+	width: 100%;
+	max-width: var(--width-page);
+	margin: 0 auto;
+	padding-left: var(--gutter);
+	padding-right: var(--gutter);
+	color: var(--color-muted);
+	text-align: left;
+}
+
+.footercontent .column { text-align: left; }
+
+.footercontent a {
+	color: var(--color-text);
+	text-decoration: none;
+}
+
+.footercontent a:hover {
+	color: var(--color-accent);
+	text-decoration: underline;
+}
+
+.footercontent ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.footercontent li { margin-bottom: 0.4em; }
+
+.footercontent span.sectiontitle {
+	display: block;
+	margin-bottom: var(--step-sm);
+	padding-bottom: var(--step-xs);
+	font-family: var(--font-heading);
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--color-heading);
+	border-bottom: 1px solid var(--color-border);
+	text-align: left;
+}
+
+.footerbottom {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--step-xs) var(--step-md);
+	align-items: center;
+	justify-content: space-between;
+	max-width: var(--width-page);
+	margin: var(--step-lg) auto 0;
+	padding: var(--step-md) var(--gutter) 0;
+	border-top: 1px solid var(--color-border);
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: #5f6c79;
+}
+
+.footerbottom a { color: #5f6c79; text-decoration: none; }
+.footerbottom a:hover { color: var(--color-accent); }
+
+
+/*********************************************
+* 12. Utilities
+**********************************************
+* base.css already ships .lead, .hug, .flush,
+* .measure, .table-full, .table-scroll and
+* .visually-hidden. These are the extras.
+**********************************************/
+.textalign-left   { text-align: left; }
+.textalign-center { text-align: center; }
+.textalign-right  { text-align: right; }
+
+.center { display: block; margin-left: auto; margin-right: auto; }
+
+.muted  { color: var(--color-muted); }
+.nowrap { white-space: nowrap; }
+
+.padding-5px  { padding: 5px; }
+.padding-10px { padding: 10px; }
+.padding-20px { padding: 20px; }
+.padding-50px { padding: 50px; }
+
+/* Equal-height children in a framework .row.
+   .column is already flex-grow:1; this makes
+   the cards inside fill the column. */
+.row-stretch { align-items: stretch; }
+.row-stretch > .column { display: flex; }
+.row-stretch > .column > * { width: 100%; }
+
+/* Tighten the framework gutter for dense grids. */
+.row-tight > .column { margin: 5px; padding: 5px; }
+
+/* Meta debug overlay (?meta=yes) */
+#debug-overlay-container {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999;
+	padding: var(--step-xs);
+	font-family: var(--font-mono);
+	font-size: 0.8rem;
+	line-height: 1.5;
+	background: var(--color-surface);
+	border-top: var(--border-hair);
+}
+
+.debug-content { max-width: 800px; margin: 0 auto; }
+
+
+/*********************************************
+* 13. Print
+**********************************************/
+@media print {
+	.stickynav, .brandbar, .footercontainer, .skiplink,
+	.hero, .pagebanner, #debug-overlay-container { display: none; }
+
+	body { background: #fff; color: #000; font-size: 11pt; }
+	.contentcontainer, .content, .measure { max-width: none; }
+
+	a[href^="http"]::after {
+		content: " (" attr(href) ")";
+		font-size: 0.85em;
+		word-break: break-all;
+	}
+
+	pre, blockquote, table, .panel { break-inside: avoid; }
+}
+
+/*********************************************
+* END OF BASTION
+**********************************************/

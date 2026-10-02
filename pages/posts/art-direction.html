@@ -1,0 +1,25 @@
+<!-- pagetitle:Making a readable battlefield -->
+<!-- pagelayout:page-html -->
+<!-- pagedate:04/30/2026 -->
+<!-- pageimage:/images/ph-square.svg -->
+<!-- pageexcerpt:Art direction on an RTS is mostly a legibility problem wearing a nice coat. Silhouettes, value separation, and why our explosions got a lot smaller. -->
+<!-- pagekeywords:Art,direction,readability,visual design -->
+<!-- pageauthor: S. Halloran -->
+<!-- pagetype:article -->
+<!-- pagecategory: art -->
+
+<p class="lead">A strategy game's art has one job before it has any others: tell the player what they are looking at, from a camera height where nothing is bigger than a thumbnail.</p>
+
+<h2>Silhouette first</h2>
+<p>Every unit is blocked out in solid black at final camera distance before anyone touches a texture. If two units are confusable as shapes, one of them changes. This is not a stylistic choice, it is a functional one, and it has killed several designs we liked.</p>
+
+<h2>Value, then colour</h2>
+<p>Faction colour does a lot of work in RTS games, and it does it badly for a meaningful number of players. We separate factions by value and shape language first and use colour as reinforcement, which means the game stays readable in greyscale. We test in greyscale weekly.</p>
+
+<h2>Smaller explosions</h2>
+<p>Our first pass at combat VFX looked great in isolation and made a twelve-unit engagement completely unreadable. Effects are now roughly forty percent smaller, shorter-lived, and biased toward the ground plane so they do not occlude units behind them.</p>
+
+<div class="row" style="margin-top:2rem">
+	<div class="column flex-basis-400"><div class="mediaframe ratio-1x1 hud"><img src="/images/ph-unit.svg" alt="Placeholder: silhouette pass"><span class="mediacaption">Silhouette pass</span></div></div>
+	<div class="column flex-basis-400"><div class="mediaframe ratio-1x1 hud hud-signal"><img src="/images/ph-unit.svg" alt="Placeholder: final unit"><span class="mediacaption">Final</span></div></div>
+</div>
