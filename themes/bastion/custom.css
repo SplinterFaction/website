@@ -1568,12 +1568,15 @@ img.full   { width: 100%; }
 
 .footercontent .column { text-align: left; }
 
-.footercontent a {
+/* Buttons are excluded: these link colours
+   outrank .btn and would put light text (and
+   accent-on-accent on hover) on the button. */
+.footercontent a:not(.btn) {
 	color: var(--color-text);
 	text-decoration: none;
 }
 
-.footercontent a:hover {
+.footercontent a:not(.btn):hover {
 	color: var(--color-accent);
 	text-decoration: underline;
 }

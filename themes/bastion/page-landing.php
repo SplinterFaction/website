@@ -39,13 +39,13 @@
 
 					<!-- Point these two wherever they should go. -->
 					<div class="cluster">
-						<a class="btn" href="https://frozenyak.itch.io/splinterfaction">Download on itch.io</a>
+						<a class="btn" href="download">Download</a>
 						<a class="btn btn-ghost" href="getting-started">Read the field manual</a>
 					</div>
 
 					<!-- Hard facts, above the fold. Edit freely. -->
 					<div class="herostrip">
-						<span><b>Status</b> &nbsp;Playable now &middot; Steam planned</span>
+						<span><b>Status</b> &nbsp;Playable now &middot; Available on itch.io &middot; Steam planned</span>
 						<span><b>Platforms</b> &nbsp;Windows &middot; Linux</span>
 						<span><b>Modes</b> &nbsp;Skirmish &middot; Survival &middot; Multiplayer</span>
 					</div>

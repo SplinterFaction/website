@@ -137,7 +137,7 @@
 			</a>
 			<div class="cluster">
 				<a class="btn btn-ghost btn-small" href="getting-started">Get started</a>
-				<a class="btn btn-small" href="https://frozenyak.itch.io/splinterfaction">Download</a>
+				<a class="btn btn-small" href="download">Download</a>
 			</div>
 		</div>
 	</div>

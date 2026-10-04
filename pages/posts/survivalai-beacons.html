@@ -1,23 +1,43 @@
 <!-- pagetitle:SurvivalAI: reading the beacon network -->
 <!-- pagelayout:page-html -->
 <!-- pagedate:06/25/2026 -->
-<!-- pageimage:/images/ph-16x9-alt.svg -->
-<!-- pageexcerpt:Wave defence is co-operative, scales however you want it to, and is the best way to introduce a friend to the game. It's also a target-priority puzzle: beacons specialise, and killing the right one changes the shape of the game. -->
-<!-- pagekeywords:survival,survivalai,wave defense,beacons,co-op,community -->
+<!-- pageimage:pages/posts/images/beaconnetwork.webp -->
+<!-- pageexcerpt:Wave defense is co-operative, scales however you want it to, and is the best way to introduce a friend to the game. It's also a target-priority puzzle: the AI starts with a full beacon network, every beacon you kill weakens it, and the panel tells you where the next wave is coming from. -->
+<!-- pagekeywords:survival,survivalai,wave defense,beacons,staging,retaliation,rage mode,upgrades,co-op,community -->
 <!-- pageauthor: Scary le Poo -->
 <!-- pagetype:article -->
 <!-- pagecategory: systems, community -->
 
-<p class="lead">SurvivalAI removes the "what is my opponent doing?" problem while keeping every economic and defensive lesson intact. That makes it a teaching mode as much as a game mode.</p>
+<p class="lead">SurvivalAI removes the "what is my opponent doing?" problem while keeping every economic and defensive lesson intact. That makes it a teaching mode as much as a game mode. It is also a game you are meant to win: the waves level off, and the way out is through the beacon network.</p>
 
 <h2>Co-op first</h2>
-<p>A team can share a survival map and hold the line together, which is the single best way to bring someone new in: an experienced player handles the pressure while the newcomer learns the economy without being eliminated for a mistake. The convention is one SurvivalAI per player, but it's entirely optional &mdash; three against one is gentle, four against four is serious. And SurvivalAI has a great many AI options: wave pacing, difficulty scaling, beacon behaviour. If it's too punishing while you're learning, turn it down.</p>
+<p>A team can share a survival map and hold the line together, which is the single best way to bring someone new in: an experienced player handles the pressure while the newcomer learns the economy without being eliminated for a mistake. The convention is one SurvivalAI per player, but it's entirely optional. Three against one is gentle, four against four is serious. Each SurvivalAI brings its own beacon network and its own waves, so adding one adds a front. And there are a great many lobby options: wave pacing, budget, network size, tech timings. If it's too punishing while you're learning, turn it down.</p>
+
+<h2>The network is there from the first minute</h2>
+<p>The AI no longer starts with a single beacon you can snipe. It opens with a full network, eight beacons by default, clustered in its own territory, and every one of them is garrisoned with turrets from the start. Some also get a shield generator. When Tech 2 unlocks, those garrisons are replaced with Tech 2 turrets. The network never grows past its starting size, so what you see at the start is the whole job.</p>
 
 <h2>Waves have a character</h2>
-<p>Assault comes head-on and wants a solid front. Raid goes for your economy and wants flank coverage. Siege outranges static defence and wants mobile units to go kill it. Air ignores ground defence entirely and wants anti-air <em>before</em> it arrives. Drop lands behind your lines and wants interior defence and a reaction force. Horde is numbers and wants area damage at a choke. Surge waves are the escalation events, larger and telegraphed &mdash; prepare during the lull.</p>
+<p>Assault comes head-on and wants a solid front. Raid goes for your economy and wants flank coverage. Siege outranges static defense and wants mobile units to go kill it. Air ignores ground defense entirely and wants anti-air <em>before</em> it arrives. Drop lands behind your lines and wants interior defense and a reaction force. Horde is numbers and wants area damage at a choke. Every tenth wave is a surge: double strength, telegraphed a wave ahead. Prepare during the lull.</p>
+<p>Where a wave comes from now depends on what it is. Siege and drop waves launch from the single beacon nearest their target. Assault and horde use the nearest three. Raids launch from every beacon at once, each group with its own target, which is why they feel like they come from everywhere. Surges use the whole network and converge on one point.</p>
 
-<h2>Beacons specialise</h2>
-<p>Beacons aren't identical. Shield beacons reinforce their waves with protection. Cloaking beacons send every unit out cloaked, which with no radar means genuinely invisible until it's on top of you. Accelerator beacons increase frequency or speed. Forge beacons improve unit quality. That creates a priority list: kill the accelerator and you get breathing room, kill the forge and the waves soften, kill the jammer and you can see again. Garrison turrets defend them, so a beacon assault is a real operation. And when you reduce the AI to its last beacon, it goes into overdrive &mdash; build up first, then commit fully.</p>
+<h2>You are told what is coming</h2>
+<p>The next wave is decided the moment the last one launches. The survival panel shows its type, and the beacons that will launch it are marked STAGING on the map once you have eyes on them. That is real information. A siege wave staging from one beacon is an invitation to go hit that beacon first. If you kill a staging beacon, another takes its place, but it will be one further from you.</p>
+
+<h2>Pressure has a ceiling</h2>
+<p>Wave strength climbs slowly at first, ramps through the mid game, and then levels off, with only a slow creep after that. The AI also counts what it already has alive: units you haven't cleared come out of the next wave's budget, so waves stop piling on top of each other. The pressure bar on the panel shows how full the field is. Leave a wave alive and the next one is smaller, though never less than a quarter. Clear the field and the next one is full strength. Either way, the game no longer ends by being buried. It ends when somebody clears the network, or fails to.</p>
+<p>Tech still escalates on a clock: Tech 2 at ten minutes, Tech 3 at twenty, Tech 4 at thirty. Tech 4 units are rationed, never more than one alive for every two players, so each one is an event rather than a flood.</p>
+
+<h2>Beacons specialize</h2>
+<p>Beacons aren't identical. Shield beacons send their units out with an overshield. Jammer beacons send every unit out cloaked, which without detection means invisible until it's on top of you. Accelerator beacons shorten the time between waves for as long as they stand. Forge beacons make their units hit harder and take more punishment. That creates a priority list: kill the accelerator and you get breathing room, kill the forge and the waves soften, kill the jammer and you can see again.</p>
+
+<h2>What killing a beacon does</h2>
+<p>Every beacon you destroy pays research points, and the bounty grows over the first fifteen minutes, so cracking a dug-in network is worth more than rushing a fresh one. It also lowers every wave from then on: with one beacon left, the AI is down to roughly half strength. That is the reward. The cost is immediate. A few seconds after a beacon dies, its nearest neighbors launch a counterattack straight at whatever killed it, so don't send a force that can't survive the answer.</p>
+<p>A damaged network regrows. Once it drops below full strength a countdown starts, ten minutes by default, and when it ends one new beacon appears, placed forward toward you and garrisoned at the current tech level. The countdown then starts again. The panel shows it. Killing beacons faster than one per countdown is how you win; killing one and going home just resets the clock.</p>
+<p>When you reduce the AI to its last beacon, it rages: waves get bigger and arrive twice as often, the beacon gains a heavy overshield, and regrowth stops. Build up first, then commit fully. There is no second attempt at a calm pace.</p>
+
+<h2>The AI researches too</h2>
+<p>SurvivalAI earns research points the same way you do, a trickle over time plus a share of everything it kills, and from ten minutes in it tries to buy a Weapons or Armor level every five minutes. Its levels are on the panel. You should stay well ahead of it, but note where its points come from: every unit you throw away pays for its next upgrade.</p>
 
 <h2>The mode's real difficulty setting</h2>
-<p>Downtime spent idle. The early waves are gentle deliberately; every second on defence you don't yet need is compounding economy lost. Build defence to a schedule, not to panic. And go on the offensive: defences don't get repaired, so pure turtling loses eventually. Use the lulls to reclaim, rebuild, expand and push out. The dedicated survival panel and the beacon labels overlay show wave timing, composition, and which beacon is which. Keep both on.</p>
+<p>Downtime spent idle. The opening minutes are the grace period and the early waves are light deliberately; every second on defense you don't yet need is compounding economy lost. Build defense to a schedule, not to panic. Then go on the offensive, because pure turtling cannot win: the waves never stop and the only victory condition is an empty network. Use the lulls to reclaim, rebuild, expand and push out.</p>
+<p>The survival panel shows the countdown, the current and next wave types, beacons standing, the regrowth timer, the AI's upgrade levels and the pressure bar. The beacon labels show which beacon is which and which ones are staging. Keep both on. If you want to see how the lobby options change the shape of a match before you host one, the <a href="survival-calculator">difficulty calculator</a> draws it wave by wave.</p>
